@@ -27,8 +27,8 @@ int Game_Init(HWND);
 void Game_Run(HWND);
 void Game_End(HWND);
 
-void Sprite_Mario();
-void bird_animation();
+void Sprite_Mario(void*);
+void bird_animation(void*);
 
 //sprite structure
 struct SPRITE{

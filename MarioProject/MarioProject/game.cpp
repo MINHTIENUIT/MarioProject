@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "game.h"
-#include <thread>
+#include <process.h>
 LPDIRECT3DTEXTURE9 caveman_image;
 LPDIRECT3DTEXTURE9 bird_image;
 SPRITE caveman;
@@ -66,9 +66,9 @@ void Game_Run(HWND hwnd)
 
 	//after short delay, ready for next frame
 	//this keeps the game running at a steady frame rate	
-			Sprite_Mario();
-			bird_animation();
-	//b.join();
+	_beginthread(Sprite_Mario, 0, NULL);
+	_beginthread(bird_animation,0,NULL);
+	
 	//start rendering
 	if (d3ddev->BeginScene())
 	{
@@ -139,7 +139,7 @@ void Game_End(HWND hwnd)
 		sprite_handler->Release();
 }
 
-void Sprite_Mario() {
+void Sprite_Mario(void*) {
 	if (KEY_DOWN(VK_RIGHT)) {
 		if (GetTickCount() - start > 30)
 		{
@@ -200,7 +200,7 @@ void Sprite_Mario() {
 	}
 }
 
-void bird_animation() {
+void bird_animation(void*) {
 	if (GetTickCount() - start > 30)
 	{
 		//reset timing
@@ -213,7 +213,7 @@ void bird_animation() {
 		//wrap the spriate at screen edges
 		if (bird.x > SCREEN_WIDTH - bird.width)
 			bird.x = 0;
-		if (caveman.x < 0) {
+		if (bird.x < 0) {
 			bird.x = SCREEN_WIDTH - bird.width;
 		}
 
