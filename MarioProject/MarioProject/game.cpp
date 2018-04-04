@@ -1,16 +1,23 @@
 #include "stdafx.h"
 #include "game.h"
 #include <process.h>
+#include <thread>
+#include "Component.h"
 LPDIRECT3DTEXTURE9 caveman_image;
 LPDIRECT3DTEXTURE9 bird_image;
 SPRITE caveman;
 SPRITE bird;
+
+Mario *mario;
 LPDIRECT3DSURFACE9 back;
 LPD3DXSPRITE sprite_handler;
+
+static std::thread *threadAnimation = nullptr;
 
 HRESULT result;
 //timming variable
 long start = GetTickCount();
+long start2 = GetTickCount();
 
 int Game_Init(HWND hwnd)
 {
@@ -31,20 +38,11 @@ int Game_Init(HWND hwnd)
 	back = LoadSurface(L"background.bmp", NULL);
 
 	//initialize the sprite's properties of main
-	caveman.x = 100;
-	caveman.y = 168;
-	caveman.width = 75;
-	caveman.height = 91;
-	caveman.curframe = 1;
-	caveman.lastframe = 15;
-	caveman.animdelay = 4;
-	caveman.animcount = 0;
-	caveman.movex = 5;	
-	caveman.movey = 0;
+	mario = new Mario(100, 168, 75, 91, 1, 15, 5, 0, 4, 0);
 
 	//initialize the sprite's properties of bird
 	bird.x = 340;
-	bird.y = 50;
+	bird.y = 168;
 	bird.width = 100;
 	bird.height = 115;
 	bird.curframe = 1;
@@ -55,7 +53,7 @@ int Game_Init(HWND hwnd)
 	bird.movey = 0;
 
 	//thread for animation
-	
+	threadAnimation = new std::thread(bird_animation);
 	return 1;
 }
 
@@ -66,8 +64,9 @@ void Game_Run(HWND hwnd)
 
 	//after short delay, ready for next frame
 	//this keeps the game running at a steady frame rate	
-	_beginthread(Sprite_Mario, 0, NULL);
-	_beginthread(bird_animation,0,NULL);
+	//Sprite_Mario();	
+	mario->animation(start);
+	bird_animation();
 	
 	//start rendering
 	if (d3ddev->BeginScene())
@@ -79,15 +78,9 @@ void Game_Run(HWND hwnd)
 		sprite_handler->Begin(D3DXSPRITE_ALPHABLEND);
 
 		//create vector to update sprite position
-		D3DXVECTOR3 position((float)caveman.x, (float)caveman.y, 0);
+		D3DXVECTOR3 position((float)mario->getX(), (float)mario->getY(), 0);
 
 		//configure the rect for the souuce tile
-		RECT srcRect;
-		int columns = 15;
-		srcRect.left = (caveman.curframe%columns)*caveman.width;
-		srcRect.top = (caveman.curframe / columns)*caveman.height;
-		srcRect.right = srcRect.left + caveman.width;
-		srcRect.bottom = srcRect.top + caveman.height;
 
 		D3DXVECTOR3 position2((float)bird.x, (float)bird.y, 0);
 
@@ -98,10 +91,12 @@ void Game_Run(HWND hwnd)
 		srcRect2.right = srcRect2.left + bird.width;
 		srcRect2.bottom = srcRect2.top + bird.height;
 
+		RECT rect = mario->getRect(15);
+
 		//draw the sprite
 		sprite_handler->Draw(
 			caveman_image,
-			&srcRect,
+			&rect,
 			NULL,
 			&position,
 			D3DCOLOR_XRGB(255, 255, 255));
@@ -139,7 +134,7 @@ void Game_End(HWND hwnd)
 		sprite_handler->Release();
 }
 
-void Sprite_Mario(void*) {
+void Sprite_Mario() {
 	if (KEY_DOWN(VK_RIGHT)) {
 		if (GetTickCount() - start > 30)
 		{
@@ -200,11 +195,11 @@ void Sprite_Mario(void*) {
 	}
 }
 
-void bird_animation(void*) {
-	if (GetTickCount() - start > 30)
+void bird_animation() {
+	if (GetTickCount() - start2 > 30)
 	{
 		//reset timing
-		start = GetTickCount();
+		start2 = GetTickCount();
 
 		//move the sprite;
 		bird.x -= bird.movex;
@@ -213,7 +208,7 @@ void bird_animation(void*) {
 		//wrap the spriate at screen edges
 		if (bird.x > SCREEN_WIDTH - bird.width)
 			bird.x = 0;
-		if (bird.x < 0) {
+		if (bird.x+bird.width < 0) {
 			bird.x = SCREEN_WIDTH - bird.width;
 		}
 

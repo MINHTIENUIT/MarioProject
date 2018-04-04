@@ -9,6 +9,7 @@
 #include <thread>
 #include <iostream>
 #include <Windowsx.h>
+#include "Mario.h"
 
 //application title
 #define APPTITLE L"Trans_Sprite"
@@ -27,8 +28,8 @@ int Game_Init(HWND);
 void Game_Run(HWND);
 void Game_End(HWND);
 
-void Sprite_Mario(void*);
-void bird_animation(void*);
+void Sprite_Mario();
+void bird_animation();
 
 //sprite structure
 struct SPRITE{
