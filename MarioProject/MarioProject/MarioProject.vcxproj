@@ -151,22 +151,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationToLeft.h" />
+    <ClInclude Include="AnimationToRight.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="dxgraphics.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="Mario.h" />
-    <ClInclude Include="SpriteAnimation.h" />
+    <ClInclude Include="InterfaceAnimation.h" />
     <ClInclude Include="MarioProject.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationToLeft.cpp" />
+    <ClCompile Include="AnimationToRight.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="dxgraphics.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="SpriteAnimation.cpp" />
+    <ClCompile Include="InterfaceAnimation.cpp" />
     <ClCompile Include="MarioProject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

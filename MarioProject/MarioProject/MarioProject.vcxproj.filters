@@ -36,10 +36,13 @@
     <ClInclude Include="Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteAnimation.h">
+    <ClInclude Include="InterfaceAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
+    <ClInclude Include="AnimationToRight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationToLeft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,10 +62,13 @@
     <ClCompile Include="Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteAnimation.cpp">
+    <ClCompile Include="InterfaceAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
+    <ClCompile Include="AnimationToRight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationToLeft.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

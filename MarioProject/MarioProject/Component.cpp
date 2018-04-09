@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "Component.h"
 
-Component::Component(int x, int y, int width, int height, int cuframe, int lastframe)
+Component::Component(int x, int y, int width, int height, int cuframe)
 {
 	this->x = x;
 	this->y = y;
 	this->width = width;
 	this->height = height;
 	this->curframe = cuframe;
-	this->lastframe = lastframe;
 }
 
 RECT Component::getRect(int columns)
@@ -19,6 +18,47 @@ RECT Component::getRect(int columns)
 	srcRect.right = srcRect.left + width;
 	srcRect.bottom = srcRect.top + height;
 	return srcRect;
+}
+
+D3DXVECTOR3 Component::getPosition()
+{
+	return D3DXVECTOR3(x, y, 0);
+}
+
+void Component::setPosistion(int x, int y)
+{
+	this->x = x;
+	this->y = y;
+}
+
+int Component::getX()
+{
+	return x;
+}
+
+int Component::getY()
+{
+	return y;
+}
+
+int Component::getWidth()
+{
+	return width;
+}
+
+int Component::getHeight()
+{
+	return height;
+}
+
+int Component::setCurframe(int curframe)
+{
+	return this->curframe = curframe;
+}
+
+void Component::animation(long & start, InterfaceAnimation * animation)
+{
+	animation->start(this,start);
 }
 
 Component::~Component()
