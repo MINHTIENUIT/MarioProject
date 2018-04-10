@@ -1,1 +1,11 @@
-﻿
+﻿  stdafx.cpp
+  AnimationToLeft.cpp
+  AnimationToRight.cpp
+  Component.cpp
+d:\mario\marioproject\marioproject\marioproject\component.cpp(25): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+  dxgraphics.cpp
+  game.cpp
+  InterfaceAnimation.cpp
+  MarioProject.cpp
+  Generating Code...
+  MarioProject.vcxproj -> D:\Mario\MarioProject\MarioProject\Debug\MarioProject.exe
